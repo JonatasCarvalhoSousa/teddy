@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  shell:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.shell
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - teddy-network
+
+  clients:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.clients
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - teddy-network
+
+  selected:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.selected
+    ports:
+      - "3002:3002"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - teddy-network
+
+networks:
+  teddy-network:
+    driver: bridge

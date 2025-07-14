@@ -1,0 +1,26 @@
+{
+  "name": "teddy-teste-monorepo",
+  "version": "1.0.0",
+  "description": "Sistema de CRUD de clientes com micro-frontends",
+  "private": true,
+  "scripts": {
+    "dev": "npm run dev --workspaces",
+    "build": "npm run build --workspaces",
+    "test": "npm run test --workspaces",
+    "lint": "npm run lint --workspaces",
+    "start": "npm run dev",
+    "vercel-build": "npm run build"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  }
+}
