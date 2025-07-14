@@ -6,9 +6,16 @@ const fs = require('fs');
 console.log('🚀 Starting build process...');
 
 try {
+  // First install root dependencies
+  console.log('📦 Installing root dependencies...');
+  execSync('npm install', { 
+    stdio: 'inherit',
+    env: { ...process.env, NODE_ENV: 'production' }
+  });
+
   // Change to shell directory
   const shellDir = path.join(__dirname, 'apps', 'shell');
-  console.log(`📁 Changing to directory: ${shellDir}`);
+  console.log(`📁 Working with directory: ${shellDir}`);
   
   // Check if shell directory exists
   if (!fs.existsSync(shellDir)) {
@@ -21,7 +28,7 @@ try {
     throw new Error(`package.json not found in ${shellDir}`);
   }
   
-  console.log('📦 Installing dependencies in shell app...');
+  console.log('📦 Installing shell dependencies...');
   execSync('npm install', { 
     cwd: shellDir, 
     stdio: 'inherit',
@@ -29,7 +36,7 @@ try {
   });
   
   console.log('🔨 Building shell app...');
-  execSync('npm run build', { 
+  execSync('npx vite build', { 
     cwd: shellDir, 
     stdio: 'inherit',
     env: { ...process.env, NODE_ENV: 'production' }
@@ -44,11 +51,20 @@ try {
     // List contents of dist directory
     const distContents = fs.readdirSync(distDir);
     console.log('📄 Built files:', distContents);
+    
+    // Verify index.html exists
+    const indexPath = path.join(distDir, 'index.html');
+    if (fs.existsSync(indexPath)) {
+      console.log('✅ index.html found in dist directory');
+    } else {
+      console.warn('⚠️ index.html not found in dist directory');
+    }
   } else {
     throw new Error('❌ Build failed: dist directory not created');
   }
   
 } catch (error) {
   console.error('❌ Build failed:', error.message);
+  console.error('Stack trace:', error.stack);
   process.exit(1);
 }

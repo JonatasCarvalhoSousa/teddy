@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "npm run build:shell",
+  "buildCommand": "npm install && cd apps/shell && npm install && npm run build",
   "outputDirectory": "apps/shell/dist",
   "routes": [
     {

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "npm run dev --workspaces",
     "build": "cd apps/shell && npm run build",
-    "build:shell": "npm install && npm run build --workspace=@teddy/shell",
+    "build:shell": "cd apps/shell && npm run build",
     "test": "npm run test --workspaces",
     "lint": "npm run lint --workspaces",
     "start": "npm run dev",
