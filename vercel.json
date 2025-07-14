@@ -1,8 +1,9 @@
 {
   "version": 2,
-  "buildCommand": "npm install && cd apps/shell && npm run build",
-  "outputDirectory": "apps/shell/dist",
+  "buildCommand": "npm run build:shell",
   "installCommand": "npm install",
+  "outputDirectory": "apps/shell/dist",
+  "rootDirectory": ".",
   "routes": [
     {
       "src": "/assets/(.*)",
