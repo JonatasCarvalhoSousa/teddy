@@ -1,7 +1,6 @@
 {
   "version": 2,
   "buildCommand": "npm run build:shell",
-  "installCommand": "npm install",
   "outputDirectory": "apps/shell/dist",
   "routes": [
     {
