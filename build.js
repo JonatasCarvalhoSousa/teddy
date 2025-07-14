@@ -4,8 +4,23 @@ const path = require('path');
 const fs = require('fs');
 
 console.log('🚀 Starting build process...');
+console.log('📁 Current working directory:', process.cwd());
+console.log('📁 Script directory:', __dirname);
 
 try {
+  // List root directory to debug
+  const rootContents = fs.readdirSync(__dirname);
+  console.log('📂 Root directory contents:', rootContents);
+
+  // Check if apps directory exists
+  const appsDir = path.join(__dirname, 'apps');
+  if (!fs.existsSync(appsDir)) {
+    throw new Error(`Apps directory ${appsDir} does not exist`);
+  }
+  
+  const appsContents = fs.readdirSync(appsDir);
+  console.log('📂 Apps directory contents:', appsContents);
+
   // First install root dependencies
   console.log('📦 Installing root dependencies...');
   execSync('npm install', { 
@@ -13,7 +28,7 @@ try {
     env: { ...process.env, NODE_ENV: 'production' }
   });
 
-  // Change to shell directory
+  // Define shell directory
   const shellDir = path.join(__dirname, 'apps', 'shell');
   console.log(`📁 Working with directory: ${shellDir}`);
   
