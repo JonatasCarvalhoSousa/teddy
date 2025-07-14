@@ -5,12 +5,12 @@
   "private": true,
   "scripts": {
     "dev": "npm run dev --workspaces",
-    "build": "npm run build --workspace=@teddy/shell",
+    "build": "cd apps/shell && npm run build",
     "build:shell": "cd apps/shell && npm run build",
     "test": "npm run test --workspaces",
     "lint": "npm run lint --workspaces",
     "start": "npm run dev",
-    "vercel-build": "npm run build:shell",
+    "vercel-build": "npm run build",
     "preview": "npm run preview --workspace=@teddy/shell"
   },
   "workspaces": [
@@ -20,6 +20,11 @@
   "devDependencies": {
     "@types/node": "^20.0.0",
     "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.8.0"
   },
   "engines": {
     "node": ">=18.0.0",
