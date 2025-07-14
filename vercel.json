@@ -3,7 +3,6 @@
   "buildCommand": "npm run build:shell",
   "installCommand": "npm install",
   "outputDirectory": "apps/shell/dist",
-  "rootDirectory": ".",
   "routes": [
     {
       "src": "/assets/(.*)",
