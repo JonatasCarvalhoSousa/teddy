@@ -68,6 +68,7 @@ const Modal: React.FC<ModalProps> = ({
 
   return (
     <div
+      data-testid="modal-overlay"
       style={{
         position: 'fixed',
         top: 0,
