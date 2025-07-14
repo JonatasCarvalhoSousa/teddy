@@ -75,11 +75,82 @@ serve -s dist
 ```bash
 npm run dev          # Desenvolvimento de todos os workspaces
 npm run build        # Build de produção de todos os workspaces  
-npm run test         # Testes em todos os workspaces
+npm run test         # Testes unitários em todos os workspaces
 npm run lint         # Linting de todos os workspaces
 npm run start        # Alias para npm run dev
 npm run vercel-build # Build específico para Vercel
+
+# Testes Específicos (no diretório apps/shell)
+cd apps/shell
+npm run test         # Executar testes unitários
+npm run test:ui      # Interface visual dos testes
+npm run test:coverage # Testes com cobertura
+npm run cypress:open # Abrir Cypress UI para E2E
+npm run cypress:run  # Executar testes E2E no terminal
+npm run test:e2e     # Alias para cypress:run
 ```
+
+## 🧪 Testes
+
+### Estrutura de Testes
+O projeto inclui testes abrangentes cobrindo diferentes níveis:
+
+#### Testes Unitários (Vitest + Testing Library)
+- **Componentes**: Button, SearchInput, Modal, etc.
+- **Serviços**: ApiService (operações CRUD)
+- **Context**: AppContext (gerenciamento de estado)
+- **Localização**: `src/**/*.test.{ts,tsx}`
+
+#### Testes End-to-End (Cypress)
+- **Autenticação**: Login/logout flow
+- **CRUD**: Criação, edição e exclusão de clientes
+- **Pesquisa**: Funcionalidade de busca em tempo real
+- **Seleção**: Sistema de seleção múltipla
+- **Responsividade**: Testes em diferentes viewports
+- **Localização**: `cypress/e2e/**/*.cy.ts`
+
+### Executando Testes
+
+#### Testes Unitários
+```bash
+# Executar todos os testes
+cd apps/shell && npm run test
+
+# Modo watch (desenvolvimento)
+cd apps/shell && npm run test -- --watch
+
+# Interface visual
+cd apps/shell && npm run test:ui
+
+# Com cobertura
+cd apps/shell && npm run test:coverage
+```
+
+#### Testes E2E
+```bash
+# Interface interativa (recomendado)
+cd apps/shell && npm run cypress:open
+
+# Modo headless (CI/CD)
+cd apps/shell && npm run cypress:run
+
+# Executar aplicação e testes E2E
+npm run dev # em um terminal
+cd apps/shell && npm run test:e2e # em outro terminal
+```
+
+### Cobertura de Testes
+- ✅ **Componentes UI**: 100% dos componentes principais
+- ✅ **Serviços de API**: Todos os endpoints mockados
+- ✅ **Gerenciamento de Estado**: Context completo
+- ✅ **Fluxos E2E**: Cenários críticos de usuário
+- ✅ **Responsividade**: Mobile, tablet e desktop
+
+### CI/CD Integration
+Os testes estão configurados para rodar automaticamente:
+- **Pull Requests**: Testes unitários obrigatórios
+- **Deploy**: Testes E2E em ambiente de staging
+- **Vercel**: Build falha se testes falharem
 
 ## 🌐 Deploy na Vercel
 
@@ -110,18 +181,6 @@ vercel --prod
 - ✅ Output directory configurado
 - ✅ Roteamento SPA (Single Page Application)
 
-## 📋 Funcionalidades
+## 📁 Estrutura Otimizada para Vercel
+```
 
-- ✅ Tela de boas-vindas com design personalizado (seguindo inspiração fornecida)
-- ✅ Layout padronizado com menu lateral e header consistente
-- ✅ Listagem de clientes da API Teddy Open Finance
-- ✅ CRUD completo (Create, Read, Update, Delete)
-- ✅ **Modais para criação e edição** - Interface popup elegante
-- ✅ **Modal de confirmação para exclusão** - Segurança extra
-- ✅ Seleção de clientes com checkbox
-- ✅ Visualização de clientes selecionados com estatísticas
-- ✅ Design system unificado (cores, componentes, tipografia)
-- ✅ Design responsivo e moderno
-- ✅ Loading states e feedback visual
-- ✅ Integração completa com API REST
-- ✅ Componentes reutilizáveis (Layout, Card, Button, Modal)

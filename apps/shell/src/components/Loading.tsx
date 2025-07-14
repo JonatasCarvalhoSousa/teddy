@@ -11,14 +11,17 @@ const Loading = ({ size = 'medium', message = 'Carregando...' }: LoadingProps) =
   };
 
   return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '2rem',
-      gap: '1rem'
-    }}>
+    <div 
+      data-testid="loading"
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '2rem',
+        gap: '1rem'
+      }}
+    >
       <div
         style={{
           width: sizes[size],

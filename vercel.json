@@ -1,26 +1,19 @@
 {
   "version": 2,
   "name": "teddy-teste",
-  "builds": [
-    {
-      "src": "apps/shell/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
-    }
-  ],
+  "buildCommand": "npm run build",
+  "outputDirectory": "apps/shell/dist",
+  "installCommand": "npm install",
+  "framework": null,
+  "functions": {},
   "routes": [
     {
-      "handle": "filesystem"
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "/apps/shell/dist/index.html"
+      "dest": "/index.html"
     }
-  ],
-  "buildCommand": "cd apps/shell && npm install && npm run build",
-  "outputDirectory": "apps/shell/dist",
-  "installCommand": "npm install",
-  "framework": "vite"
+  ]
 }

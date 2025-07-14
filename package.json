@@ -5,11 +5,12 @@
   "private": true,
   "scripts": {
     "dev": "npm run dev --workspaces",
-    "build": "npm run build --workspaces",
+    "build": "npm run build --workspace=@teddy/shell",
     "test": "npm run test --workspaces",
     "lint": "npm run lint --workspaces",
     "start": "npm run dev",
-    "vercel-build": "npm run build"
+    "vercel-build": "npm run build",
+    "preview": "npm run preview --workspace=@teddy/shell"
   },
   "workspaces": [
     "apps/*",
