@@ -1,22 +1,16 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "apps/shell/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
-    }
-  ],
+  "buildCommand": "npm install && cd apps/shell && npm run build",
+  "outputDirectory": "apps/shell/dist",
+  "installCommand": "npm install",
   "routes": [
     {
       "src": "/assets/(.*)",
-      "dest": "/apps/shell/dist/assets/$1"
+      "dest": "/assets/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "/apps/shell/dist/index.html"
+      "dest": "/index.html"
     }
   ]
 }
