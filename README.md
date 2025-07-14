@@ -181,6 +181,5 @@ vercel --prod
 - ✅ Output directory configurado
 - ✅ Roteamento SPA (Single Page Application)
 
-## 📁 Estrutura Otimizada para Vercel
 ```
 
