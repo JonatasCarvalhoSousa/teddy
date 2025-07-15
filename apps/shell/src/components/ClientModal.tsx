@@ -163,7 +163,15 @@ const ClientModal: React.FC<ClientModalProps> = ({
               min="0"
               value={salaryInput}
               onChange={(e) => setSalaryInput(e.target.value)}
-              placeholder="0,00"
+              onFocus={(e) => {
+                e.target.select();
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Backspace' && salaryInput === '0') {
+                  setSalaryInput('');
+                }
+              }}
+              placeholder="Digite o salário"
               style={{
                 width: '100%',
                 padding: '0.75rem',
@@ -201,7 +209,15 @@ const ClientModal: React.FC<ClientModalProps> = ({
               min="0"
               value={companyValueInput}
               onChange={(e) => setCompanyValueInput(e.target.value)}
-              placeholder="0,00"
+              onFocus={(e) => {
+                e.target.select();
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Backspace' && companyValueInput === '0') {
+                  setCompanyValueInput('');
+                }
+              }}
+              placeholder="Digite o valor da empresa"
               style={{
                 width: '100%',
                 padding: '0.75rem',

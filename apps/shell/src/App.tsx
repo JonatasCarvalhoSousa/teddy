@@ -1,9 +1,13 @@
-import { Routes, Route } from 'react-router-dom'
-import { AppProvider } from './context/AppContext'
-import WelcomePage from './pages/WelcomePage' // ou WelcomePageDark para versão fundo escuro
-import ClientsPage from './pages/ClientsPage'
-import SelectedPage from './pages/SelectedPage'
-import './App.css'
+import React, { Suspense } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { AppProvider } from './context/AppContext';
+import WelcomePage from './pages/WelcomePage';
+import Layout from './components/Layout';
+import './App.css';
+
+// Lazy load dos micro-frontends
+const ClientsPage = React.lazy(() => import('./pages/ClientsPageMF'));
+const SelectedPage = React.lazy(() => import('./pages/SelectedPageMF'));
 
 function App() {
   return (
@@ -11,12 +15,30 @@ function App() {
       <div className="app">
         <Routes>
           <Route path="/" element={<WelcomePage />} />
-          <Route path="/clients" element={<ClientsPage />} />
-          <Route path="/selected" element={<SelectedPage />} />
+          <Route 
+            path="/clients" 
+            element={
+              <Layout>
+                <Suspense fallback={<div className="loading">Carregando...</div>}>
+                  <ClientsPage />
+                </Suspense>
+              </Layout>
+            } 
+          />
+          <Route 
+            path="/selected" 
+            element={
+              <Layout>
+                <Suspense fallback={<div className="loading">Carregando...</div>}>
+                  <SelectedPage />
+                </Suspense>
+              </Layout>
+            } 
+          />
         </Routes>
       </div>
     </AppProvider>
-  )
+  );
 }
 
-export default App
+export default App;

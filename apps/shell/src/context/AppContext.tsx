@@ -22,6 +22,8 @@ type AppAction =
   | { type: 'UPDATE_CLIENT'; payload: Client }
   | { type: 'REMOVE_CLIENT'; payload: number }
   | { type: 'TOGGLE_SELECT_CLIENT'; payload: number }
+  | { type: 'SELECT_CLIENT'; payload: number }
+  | { type: 'UNSELECT_CLIENT'; payload: number }
   | { type: 'CLEAR_SELECTED_CLIENTS' }
   | { type: 'SET_LOADING'; payload: boolean }
   | { type: 'SET_ERROR'; payload: string | null }
@@ -80,6 +82,23 @@ function appReducer(state: AppState, action: AppAction): AppState {
         selectedClients: isSelected
           ? state.selectedClients.filter(id => id !== clientId)
           : [...state.selectedClients, clientId],
+      };
+
+    case 'SELECT_CLIENT':
+      const selectClientId = action.payload;
+      if (!state.selectedClients.includes(selectClientId)) {
+        return {
+          ...state,
+          selectedClients: [...state.selectedClients, selectClientId],
+        };
+      }
+      return state;
+
+    case 'UNSELECT_CLIENT':
+      const unselectClientId = action.payload;
+      return {
+        ...state,
+        selectedClients: state.selectedClients.filter(id => id !== unselectClientId),
       };
     
     case 'CLEAR_SELECTED_CLIENTS':

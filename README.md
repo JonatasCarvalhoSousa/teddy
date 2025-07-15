@@ -1,93 +1,166 @@
-# Teddy Teste - Sistema de CRUD de Clientes
+# Teddy Teste - Sistema de CRUD de Clientes com Micro-frontends
 
-Sistema desenvolvido com arquitetura de micro-frontends para gerenciamento de clientes, utilizando NPM Workspaces e preparado para deploy na Vercel.
+Sistema desenvolvido com arquitetura de micro-frontends usando Module Federation, permitindo comunicação e funcionamento independente dos serviços.
 
-## 🏗️ Arquitetura
+## 🏗️ Arquitetura de Micro-frontends
 
-### Micro-frontends:
-- **shell**: Aplicação principal (roteamento e orquestração)
-- **clients**: Micro-frontend para CRUD de clientes
-- **selected**: Micro-frontend para visualização de clientes selecionados
-- **design-system**: Biblioteca de componentes compartilhados
+### Aplicações:
+- **shell** (porta 3000): Aplicação principal (roteamento e orquestração)
+- **clients** (porta 3001): Micro-frontend para CRUD de clientes
+- **selected** (porta 3002): Micro-frontend para visualização de clientes selecionados
+- **design-system**: Biblioteca compartilhada (tipos, eventos, utilitários)
+
+### 🔄 **Comunicação entre Micro-frontends**
+
+Os serviços se comunicam através de:
+
+1. **Event Bus Centralizado**: Sistema de eventos customizados
+2. **Module Federation**: Compartilhamento de componentes e serviços
+3. **Estado Sincronizado**: Sincronização automática entre micro-frontends
+
+**Fluxo de Comunicação:**
+```
+Clients MF ←→ Event Bus ←→ Shell ←→ Event Bus ←→ Selected MF
+     ↓                                              ↓
+API Externa                                   Estado Local
+```
+
+**Eventos Principais:**
+- `client:created` - Novo cliente criado
+- `client:updated` - Cliente atualizado  
+- `client:deleted` - Cliente excluído
+- `client:selected` - Cliente selecionado
+- `client:unselected` - Cliente desmarcado
+- `state:sync` - Sincronização de estado
 
 ## 🚀 Tecnologias
 
-- React 18 + TypeScript
-- Vite (build tool)
-- NPM Workspaces (monorepo)
-- React Router DOM (roteamento)
-- Vercel (deploy)
+- **React 18** + TypeScript
+- **Module Federation** (Webpack 5)
+- **NPM Workspaces** (monorepo)
+- **React Router DOM** (roteamento)
+- **Event-driven Architecture** (comunicação)
+- **Vite** + **Webpack** (build tools)
 
 ## 📦 Estrutura do Projeto
 
 ```
 teddy-teste/
 ├── apps/
-│   ├── shell/          # App principal
-│   ├── clients/        # CRUD de clientes
-│   └── selected/       # Clientes selecionados
+│   ├── shell/          # App principal - Orquestrador
+│   ├── clients/        # Micro-frontend - CRUD de clientes  
+│   └── selected/       # Micro-frontend - Clientes selecionados
 ├── packages/
-│   └── design-system/  # Componentes compartilhados
+│   └── design-system/  # Tipos, eventos e utilitários compartilhados
 ├── docker/             # Configurações Docker
 └── package.json        # Root package.json
 ```
 
 ## 🛠️ Como executar
 
-### Pré-requisitos
-- Node.js >= 18.0.0
-- NPM >= 8.0.0
+### Setup Automático (Recomendado)
 
-### Instalação e Desenvolvimento
+**Windows:**
 ```bash
-# Clonar o repositório
-git clone https://github.com/JonatasCarvalhoSousa/teddy.git
-cd teddy
+setup.bat
+```
 
-# Instalar dependências (NPM Workspaces)
+**Linux/Mac:**
+```bash
+chmod +x setup.sh
+./setup.sh
+```
+
+### Setup Manual
+
+```bash
+# 1. Instalar dependências
 npm install
 
-# Executar em modo desenvolvimento
+# 2. Build do design system
+cd packages/design-system && npm run build && cd ../..
+
+# 3. Instalar dependências dos workspaces
+npm install --workspaces
+
+# 4. Rodar todos os micro-frontends
 npm run dev
-
-# Build para produção
-npm run build
-
-# Preview do build
-cd apps/shell && npm run preview
 ```
 
-### Teste Local do Build
-```bash
-# Build do projeto
-npm run build
+### 🌐 Acessar Aplicações
 
-# Testar build localmente
-cd apps/shell
-npm run preview
-
-# Ou usar serve globalmente
-npm install -g serve
-serve -s dist
-```
+- **Shell Principal**: http://localhost:3000
+- **Clients MF**: http://localhost:3001 (standalone)
+- **Selected MF**: http://localhost:3002 (standalone)
 
 ### Scripts Disponíveis
-```bash
-npm run dev          # Desenvolvimento de todos os workspaces
-npm run build        # Build de produção de todos os workspaces  
-npm run test         # Testes unitários em todos os workspaces
-npm run lint         # Linting de todos os workspaces
-npm run start        # Alias para npm run dev
-npm run vercel-build # Build específico para Vercel
 
-# Testes Específicos (no diretório apps/shell)
-cd apps/shell
-npm run test         # Executar testes unitários
-npm run test:ui      # Interface visual dos testes
-npm run test:coverage # Testes com cobertura
-npm run cypress:open # Abrir Cypress UI para E2E
-npm run cypress:run  # Executar testes E2E no terminal
-npm run test:e2e     # Alias para cypress:run
+```bash
+# Desenvolvimento
+npm run dev              # Todos os micro-frontends simultaneamente
+npm run dev:shell        # Apenas Shell (porta 3000)
+npm run dev:clients      # Apenas Clients (porta 3001)
+npm run dev:selected     # Apenas Selected (porta 3002)
+
+# Build
+npm run build            # Build de todos os workspaces
+npm run build:shell      # Build apenas do Shell
+npm run build:clients    # Build apenas do Clients
+npm run build:selected   # Build apenas do Selected
+
+# Outros
+npm run test             # Testes em todos os workspaces
+npm run lint             # Linting em todos os workspaces
+```
+
+## 🔧 **Como Funciona a Comunicação**
+
+### 1. **Event Bus Centralizado**
+```typescript
+// Emitir evento
+eventBus.emit('client:created', newClient);
+
+// Escutar evento
+eventBus.on('client:created', (client) => {
+  // Atualizar estado local
+});
+```
+
+### 2. **Module Federation**
+```typescript
+// Shell carrega componentes remotos
+const ClientsApp = React.lazy(() => import('clients/ClientsApp'));
+const SelectedApp = React.lazy(() => import('selected/SelectedApp'));
+```
+
+### 3. **Sincronização de Estado**
+```typescript
+// Sincronizar estado entre micro-frontends
+eventBus.syncState(clients, selectedIds);
+```
+
+## 🧪 **Testando a Comunicação**
+
+1. **Acesse o Shell**: http://localhost:3000
+2. **Navegue para Clientes**: Crie/edite/exclua clientes
+3. **Navegue para Selecionados**: Veja as mudanças refletidas
+4. **Teste Standalone**: Acesse http://localhost:3001 e http://localhost:3002
+
+### Verificar Comunicação:
+- Abra o **Console do Browser** (F12)
+- Veja os logs do Event Bus: `[EventBus] Emitted: client:created`
+- Observe a sincronização automática entre páginas
+
+## 🐳 **Docker (Opcional)**
+
+```bash
+# Subir todos os serviços
+docker-compose -f docker/docker-compose.yml up
+
+# URLs:
+# - Shell: http://localhost:3000
+# - Clients: http://localhost:3001  
+# - Selected: http://localhost:3002
 ```
 
 ## 🧪 Testes
