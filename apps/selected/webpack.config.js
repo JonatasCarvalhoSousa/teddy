@@ -2,11 +2,8 @@ const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPl
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
-const isProduction = process.env.NODE_ENV === 'production';
-const isDevelopment = !isProduction;
-
 module.exports = {
-  mode: isProduction ? 'production' : 'development',
+  mode: 'development',
   entry: './src/bootstrap.tsx',
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
@@ -24,7 +21,7 @@ module.exports = {
       },
     ],
   },
-  devServer: isDevelopment ? {
+  devServer: {
     port: 3002,
     headers: {
       'Access-Control-Allow-Origin': '*',
@@ -33,7 +30,7 @@ module.exports = {
     },
     hot: true,
     liveReload: true,
-  } : undefined,
+  },
   plugins: [
     new ModuleFederationPlugin({
       name: 'selected',

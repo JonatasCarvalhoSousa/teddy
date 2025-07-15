@@ -3,8 +3,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   entry: './src/bootstrap.tsx',
+  output: {
+    publicPath: 'auto',
+  },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
   },
@@ -21,23 +24,13 @@ module.exports = {
       },
     ],
   },
-  devServer: {
-    port: 3001,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
-      'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
-    },
-    hot: true,
-    liveReload: true,
-  },
   plugins: [
     new ModuleFederationPlugin({
-      name: 'clients',
+      name: 'selected',
       filename: 'remoteEntry.js',
       exposes: {
-        './ClientsApp': './src/ClientsApp.tsx',
-        './ClientsService': './src/services/clientsService.ts',
+        './SelectedApp': './src/SelectedApp.tsx',
+        './SelectedService': './src/services/selectedService.ts',
       },
       shared: {
         react: { singleton: true, requiredVersion: '^18.2.0' },

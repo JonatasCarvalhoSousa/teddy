@@ -2,25 +2,8 @@ const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPl
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
-const isProduction = process.env.NODE_ENV === 'production';
-const isDevelopment = !isProduction;
-
-// URLs dos micro frontends
-const MICROFRONTEND_URLS = {
-  development: {
-    clients: 'http://localhost:3001/remoteEntry.js',
-    selected: 'http://localhost:3002/remoteEntry.js',
-  },
-  production: {
-    clients: 'https://your-vercel-app.vercel.app/clients/remoteEntry.js',
-    selected: 'https://your-vercel-app.vercel.app/selected/remoteEntry.js',
-  }
-};
-
-const currentUrls = isProduction ? MICROFRONTEND_URLS.production : MICROFRONTEND_URLS.development;
-
 module.exports = {
-  mode: isProduction ? 'production' : 'development',
+  mode: 'development',
   entry: './src/bootstrap.tsx',
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
@@ -51,7 +34,7 @@ module.exports = {
       },
     ],
   },
-  devServer: isDevelopment ? {
+  devServer: {
     port: 3000,
     historyApiFallback: true,
     headers: {
@@ -61,13 +44,13 @@ module.exports = {
     },
     hot: true,
     liveReload: true,
-  } : undefined,
+  },
   plugins: [
     new ModuleFederationPlugin({
       name: 'shell',
       remotes: {
-        clients: `clients@${currentUrls.clients}`,
-        selected: `selected@${currentUrls.selected}`,
+        clients: 'clients@http://localhost:3001/remoteEntry.js',
+        selected: 'selected@http://localhost:3002/remoteEntry.js',
       },
       shared: {
         react: { singleton: true, requiredVersion: '^18.2.0' },

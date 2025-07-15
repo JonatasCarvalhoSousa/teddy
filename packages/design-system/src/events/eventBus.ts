@@ -1,10 +1,5 @@
 import { Client } from '../types/client';
 
-interface EventData {
-  type: string;
-  payload: any;
-}
-
 export interface MicroFrontendEvents {
   'client:created': Client;
   'client:updated': Client;

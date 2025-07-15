@@ -1,47 +1,4 @@
 {
-  "version": 2,
-  "buildCommand": "npm run build:all",
-  "outputDirectory": "apps/shell/dist",
-  "installCommand": "npm run install:all",
-  "functions": {
-    "apps/shell/dist/clients/remoteEntry.js": {
-      "includeFiles": ["apps/clients/dist/**"]
-    },
-    "apps/shell/dist/selected/remoteEntry.js": {
-      "includeFiles": ["apps/selected/dist/**"]
-    }
-  },
-  "routes": [
-    {
-      "src": "/clients/(.*)",
-      "dest": "/clients/$1"
-    },
-    {
-      "src": "/selected/(.*)",
-      "dest": "/selected/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "*"
-        },
-        {
-          "key": "Access-Control-Allow-Methods",
-          "value": "GET, POST, PUT, DELETE, PATCH, OPTIONS"
-        },
-        {
-          "key": "Access-Control-Allow-Headers",
-          "value": "X-Requested-With, content-type, Authorization"
-        }
-      ]
-    }
-  ]
+  "buildCommand": "npm run vercel-build",
+  "outputDirectory": "apps/shell/dist"
 }

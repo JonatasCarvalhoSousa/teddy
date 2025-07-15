@@ -9,14 +9,12 @@
     "dev:clients": "cd apps/clients && npm run dev",
     "dev:selected": "cd apps/selected && npm run dev",
     "build": "npm run build --workspaces",
-    "build:all": "node build-script.js",
-    "build:shell": "cd apps/shell && npm run build:prod",
-    "build:clients": "cd apps/clients && npm run build:prod",
-    "build:selected": "cd apps/selected && npm run build:prod",
+    "build:shell": "cd apps/shell && npm run build",
+    "build:clients": "cd apps/clients && npm run build",
+    "build:selected": "cd apps/selected && npm run build",
     "test": "npm run test --workspaces",
     "lint": "npm run lint --workspaces",
     "start": "npm run dev",
-    "vercel-build": "npm run build:all",
     "preview": "npm run preview --workspaces",
     "install:all": "npm install && npm run build:design-system",
     "build:design-system": "cd packages/design-system && npm run build"
@@ -27,8 +25,8 @@
   ],
   "devDependencies": {
     "@types/node": "^20.0.0",
-    "typescript": "^5.0.0",
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "typescript": "^5.0.0"
   },
   "dependencies": {
     "react": "^18.2.0",

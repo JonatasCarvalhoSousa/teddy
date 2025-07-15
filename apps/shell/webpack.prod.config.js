@@ -3,10 +3,26 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   entry: './src/bootstrap.tsx',
+  output: {
+    publicPath: 'auto',
+  },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
+        },
+      },
+    },
+    runtimeChunk: 'single',
   },
   module: {
     rules: [
@@ -21,27 +37,17 @@ module.exports = {
       },
     ],
   },
-  devServer: {
-    port: 3001,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
-      'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
-    },
-    hot: true,
-    liveReload: true,
-  },
   plugins: [
     new ModuleFederationPlugin({
-      name: 'clients',
-      filename: 'remoteEntry.js',
-      exposes: {
-        './ClientsApp': './src/ClientsApp.tsx',
-        './ClientsService': './src/services/clientsService.ts',
+      name: 'shell',
+      remotes: {
+        clients: 'clients@https://microfrontend-clients.vercel.app/remoteEntry.js',
+        selected: 'selected@https://microfrontend-selected.vercel.app/remoteEntry.js',
       },
       shared: {
         react: { singleton: true, requiredVersion: '^18.2.0' },
         'react-dom': { singleton: true, requiredVersion: '^18.2.0' },
+        'react-router-dom': { singleton: true, requiredVersion: '^6.8.0' },
       },
     }),
     new HtmlWebpackPlugin({
