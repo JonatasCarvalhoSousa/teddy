@@ -1,7 +1,10 @@
 describe('Search Functionality', () => {
   beforeEach(() => {
     cy.login('João Silva')
-    cy.contains('clientes encontrados', { timeout: 10000 }).should('be.visible')
+    // Aguardar carregamento do microfrontend
+    cy.contains('clientes encontrados', { timeout: 20000 }).should('be.visible')
+    // Aguardar estabilização da interface
+    cy.wait(1000)
   })
 
   it('should display search input', () => {

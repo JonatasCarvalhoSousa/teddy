@@ -8,11 +8,16 @@
     "preview": "serve dist -s -p 3000",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "test": "npx vitest",
+    "test:run": "npx vitest run",
     "test:ui": "npx vitest --ui",
     "test:coverage": "npx vitest --coverage",
+    "test:watch": "npx vitest --watch",
     "cypress:open": "npx cypress open",
     "cypress:run": "npx cypress run",
-    "test:e2e": "npx cypress run"
+    "test:e2e": "npx cypress run",
+    "test:e2e:open": "npx cypress open",
+    "test:all": "npm run test:run && npm run test:e2e",
+    "test:mf": "npx vitest run src/pages/*MF*.test.tsx src/events/*.test.ts"
   },
   "dependencies": {
     "react": "^18.2.0",
