@@ -4,7 +4,40 @@ import { useNavigate } from 'react-router-dom';
 import { eventBus, listenToExternalEvents } from '../events/eventBus';
 
 // @ts-ignore
-const SelectedApp = React.lazy(() => import('selected/SelectedApp'));
+const SelectedApp = React.lazy(() => 
+  import('selected/SelectedApp').catch((error) => {
+    console.error('Erro ao carregar SelectedApp:', error);
+    // Retorna um componente de erro em caso de falha
+    return {
+      default: () => (
+        <div style={{
+          padding: '40px',
+          textAlign: 'center',
+          color: '#dc3545',
+          border: '1px solid #f5c6cb',
+          borderRadius: '4px',
+          backgroundColor: '#f8d7da'
+        }}>
+          <h3>Erro ao carregar o módulo Selected</h3>
+          <p>Verifique se o serviço está rodando na porta 3002</p>
+          <button 
+            onClick={() => window.location.reload()}
+            style={{
+              padding: '8px 16px',
+              backgroundColor: '#dc3545',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer'
+            }}
+          >
+            Tentar Novamente
+          </button>
+        </div>
+      )
+    };
+  })
+);
 
 const SelectedPageMF: React.FC = () => {
   const { state, dispatch } = useAppContext();

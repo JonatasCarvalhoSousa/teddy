@@ -27,7 +27,7 @@ const SelectedApp: React.FC<SelectedAppProps> = () => {
     };
 
     // Listener para evento customizado de mudança de seleção
-    const handleSelectionChanged = async (event: any) => {
+    const handleSelectionChanged = async () => {
       await loadSelectedClients();
     };
 

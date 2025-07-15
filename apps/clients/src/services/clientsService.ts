@@ -32,7 +32,8 @@ class ClientsService {
       if (contentType && contentType.includes('application/json')) {
         return await response.json();
       } else {
-        const text = await response.text();
+        // Response não é JSON, retornar objeto vazio
+        await response.text(); // Consumir o response mesmo que não seja usado
         return {} as T;
       }
     } catch (error) {

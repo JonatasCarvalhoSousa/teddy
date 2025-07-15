@@ -25,7 +25,11 @@ module.exports = {
     port: 3001,
     headers: {
       'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+      'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
     },
+    hot: true,
+    liveReload: true,
   },
   plugins: [
     new ModuleFederationPlugin({
@@ -38,7 +42,6 @@ module.exports = {
       shared: {
         react: { singleton: true, requiredVersion: '^18.2.0' },
         'react-dom': { singleton: true, requiredVersion: '^18.2.0' },
-        'react-router-dom': { singleton: true, requiredVersion: '^6.8.0' },
       },
     }),
     new HtmlWebpackPlugin({
