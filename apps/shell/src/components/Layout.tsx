@@ -373,17 +373,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               </h1>
             </div>
           </div>
-          
-          {!isMobile && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-              <span style={{ fontSize: '0.9rem', color: '#718096' }}>
-                {location.pathname === '/clients' ? 'Clientes' : 'Clientes selecionados'}
-              </span>
-              <span style={{ fontSize: '0.9rem', color: '#718096' }}>
-                {state.clients.length} clientes encontrados
-              </span>
-            </div>
-          )}
         </header>
 
         {/* Main Content */}

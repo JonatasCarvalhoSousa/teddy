@@ -82,16 +82,7 @@ const Pagination: React.FC<PaginationProps> = ({
             </option>
           ))}
         </select>
-        
-        {totalItems && (
-          <span style={{ 
-            marginLeft: window.innerWidth < 768 ? '0' : '1rem',
-            textAlign: 'center',
-            width: window.innerWidth < 768 ? '100%' : 'auto'
-          }}>
-            Total: <strong>{totalItems}</strong> clientes
-          </span>
-        )}
+      
       </div>
 
       {totalPages > 1 && (
