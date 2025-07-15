@@ -4,9 +4,10 @@
   "scripts": {
     "dev": "webpack serve --config webpack.config.js",
     "build": "webpack --config webpack.config.js",
+    "build:prod": "NODE_ENV=production webpack --config webpack.config.js",
     "preview": "serve dist -s -p 3000",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "vercel-build": "npm run build",
+    "vercel-build": "npm run build:prod",
     "test": "npx vitest",
     "test:ui": "npx vitest --ui",
     "test:coverage": "npx vitest --coverage",
